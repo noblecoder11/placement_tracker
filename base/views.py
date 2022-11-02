@@ -21,11 +21,13 @@ def create_post(request):
     return render(request, 'base/postcreate.html', context) 
 
 def user_login(request) : 
-    print("here")
+    # print("here")
     if request.method =='POST' : 
         form = LoginForm(request.POST)
         if form.is_valid() : 
-            form.save()
+            sname = form.cleaned_data['name']
+            
+            # form.save()
             return redirect('home')
     form = LoginForm()
     context = { 

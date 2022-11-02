@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'base',
+    'crispy_forms' ,
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'miniproject',
         'USER': 'root',
-        'PASSWORD': 'mysql',
+        'PASSWORD': 'Sk21@mysql',
         'HOST':'localhost',
         'PORT':'3306',
     }

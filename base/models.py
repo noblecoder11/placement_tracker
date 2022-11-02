@@ -1,19 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from .helpers import current_year , years
 class Department(models.Model) : 
     name = models.CharField(max_length=100)
     def __str__(self) :
         return self.name
-
-import datetime
-
-def year_choices():
-    return [(r,r) for r in range(1984, datetime.date.today().year+1)]
-
-def current_year():
-    return datetime.date.today().year
-years = year_choices()
 
 class Student(models.Model) :
     name = models.CharField(max_length=100)
