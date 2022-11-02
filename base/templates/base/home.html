@@ -1,0 +1,17 @@
+{% extends 'base/main.html' %}
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <h1>Recent  Posts </h1>
+        <ul>
+            {% for p in post %}
+                <li>
+                    <p>{{p.title}}</p>
+                    <p>{{p.content}}</p>
+                    <p>{{p.author}}</p>
+                    <p>{{p.created_at}}</p>
+                </li>
+            {% endfor %}
+    {% else %}
+        <h3><a href="{% url 'login' %}">Login</a></h3>            
+    {% endif %}
+{% endblock %}
