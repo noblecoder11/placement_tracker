@@ -1,0 +1,16 @@
+{% extends 'base/main.html' %}}
+{% block content %}
+<h1>All posts</h1>
+<ul>
+    {% for p in post %}
+    <div class="card" style="width:18rem">
+        <div class="card-body">
+            <p>{{p.title}}</p>
+            <p>{{p.content}}</p>
+            <p>{{p.author}}</p>
+            <p>{{p.created_at}}</p>
+        </div>
+    </div>
+    {% endfor %}
+    </ul>
+{% endblock  %}

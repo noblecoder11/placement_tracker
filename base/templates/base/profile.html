@@ -1,0 +1,9 @@
+{% extends 'base/main.html' %}
+{% block content %}
+<h3>Welcome {{student.name}}</h3>
+<h3>Your recent posts</h3>
+<p><a href="{% url 'new_post' %}">Add Post</a></p>
+    {% for p in posts %}
+    <p>{{p.content}}</p>
+    {% endfor %}
+{% endblock %}

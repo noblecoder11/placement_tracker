@@ -1,0 +1,73 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="container" style="width: 25rem" class="align-items-center">
+    <br/>
+    <h4>Register</h4>
+    <br/>
+    <form method="POST" action="">
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+            <div class="form-control">
+                {{form.name}}
+            </div>
+            <label class="form-label" for="form2Example1">Username</label>
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <div class="form-control">
+                {{form.password}}
+            </div>
+            <!-- <input type="password" id="form2Example2" class="form-control" /> -->
+            <label class="form-label" for="form2Example2">Password</label>
+        </div>
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <div class="form-control">
+                {{form.confirm_password}}
+            </div>
+            <!-- <input type="password" id="form2Example2" class="form-control" /> -->
+            <label class="form-label" for="form2Example2">Confirm Password</label>
+        </div>
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <!-- <input type="password" id="form2Example2" class="form-control" /> -->
+            <div class="form-control">
+                {{form.year_of_passing}}
+            </div>
+
+            <label class="form-label" for="form2Example2">Year of Passing</label>
+        </div>
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <div class="form-control">
+            {{form.dept_id}}
+            </div>
+            <label class="form-label" for="form2Example2">Department</label>
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" value="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
+
+        <!-- Register buttons -->
+        <div class="text-center">
+            <p>Already a member? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+        {% csrf_token %}
+
+    </form>
+</div>
+<!-- <form method="POST" action="">
+    <p>{{form.password.label}} {{form.password}}</p>
+    <p>{{form.confirm_password.label}} {{form.confirm_password}}</p>
+    <p>{{form.name.label}} {{form.name}}</p>
+    <p>Year of passing {{form.year_of_passing}}</p>
+    <p>Department {{form.dept_id}}</p>
+    <input type="submit" value="submit">
+    {% csrf_token %}
+</form> -->
+
+{% endblock %}
