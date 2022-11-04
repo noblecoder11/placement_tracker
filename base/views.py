@@ -35,7 +35,6 @@ def create_post(request):
     return render(request, 'base/postcreate.html', context) 
 
 def user_register(request) : 
-    # print("here")
     if request.method =='POST' : 
         form = RegisterForm(request.POST)
         if form.is_valid() : 
