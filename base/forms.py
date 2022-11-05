@@ -22,8 +22,10 @@ def show_companies() :
 COMPANY_CHOICES = show_companies()
 class PostForm(ModelForm):
     company = forms.ChoiceField(choices = COMPANY_CHOICES )
-    intern = forms.BooleanField()
+    intern = forms.BooleanField(initial=False ,required=False)
     ctc = forms.IntegerField()
+
+
     class Meta:
         model = Post
         fields = ['title', 'content']
@@ -33,11 +35,9 @@ class PostForm(ModelForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
 
-    def save(self ,**kwargs) : 
+    def save(self  , offer_id ,**kwargs) : 
         self.clean()
-        oid = kwargs['offer_id']
-        print(oid)
-        self.cleaned_data['offer_id'] = oid
+        self.instance.offer_id = offer_id
         return super(PostForm ,self).save(**kwargs)
 
 

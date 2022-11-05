@@ -10,7 +10,7 @@ class Student(models.Model) :
     name = models.CharField(max_length=100)
     year_of_passing =models.IntegerField(('year_of_passing'), choices=years, default=current_year)
     dept_id = models.ForeignKey(Department, on_delete=models.CASCADE)
-    user = models.ForeignKey(User ,on_delete = models.CASCADE)
+    user = models.ForeignKey(User ,on_delete = models.CASCADE ,related_name ='stud')
     def __str__(self) : 
         return self.name
 
@@ -33,7 +33,7 @@ class Placement_Detail(models.Model) :
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     ctc_stipend = models.IntegerField()
-    intern = models.BooleanField()
+    intern = models.BooleanField(default=False )
 
     
 

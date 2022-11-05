@@ -22,4 +22,4 @@ admin.site.register(Domain)
 admin.site.register(Company)
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin) : 
-    list_display = ['id' ,'title']
+    list_display = ['id' ,'title' ,'offer_id']

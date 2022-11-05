@@ -1,10 +1,12 @@
-from django.shortcuts import render ,redirect
+from django.shortcuts import render ,redirect 
+from django.urls import reverse
 from django.http import HttpResponse
 from django.db import connection
 from .models import *
 from django.contrib.auth.models import User
 from .forms import *
 from django.contrib.auth import login,logout,authenticate
+
 def home(request):
     p = Post.objects.all()
     post_author_list =[]
@@ -13,9 +15,9 @@ def home(request):
 
     posts_len = len(post_author_list) 
     post_author_list = post_author_list[0:min(4,posts_len)]
-    
     context ={
-        'post' : post_author_list,
+        'post' : post_author_list ,
+        # 'student_id' : student_id 
     }
     return render(request, 'base/home.html', context) 
 
@@ -25,9 +27,7 @@ def show_all_posts(request) :
             post_author_list =[]
             for po in p:
                 post_author_list.append([po, po.offer_id.student_id])
-                # print(po.offer_id)
-                # stu = Placement_Detail.objects.get(id = po.offer_id)
-                # print(stu)
+
             print(p)
             print(post_author_list)
                 # select student_id from Post natural join Placement_Detail where Post.offer_id=Placement_Detail.id 
@@ -43,34 +43,29 @@ def show_all_posts(request) :
 
 def create_post(request):
      if request.method == 'POST' : 
-        print("here")
         form = PostForm(request.POST)         
         if form.is_valid() : 
-            # form.save() 
-            userid = request.user.id
-            usr =User.objects.get(id =userid)
-            print(usr)
+            usr = request.user
             stu =''
-            # stu = Student.objects.get(user=usr)
-            # stu = Student.objects.get(id= request.user.id)
+            stu = Student.objects.get(user=usr)
+            # print(stu)
             company =Company.objects.get(name = form.cleaned_data['company'])
             intern = form.cleaned_data['intern']
             ctc = form.cleaned_data['ctc']
-            # offer =Placement_Detail.objects.create(
-            #     student_id = stu ,
-            #     company_id =company ,
-            #     ctc_stipend = ctc ,
-            #     intern = intern 
-            # )
-            print("------ New Offer created -------")
-            new_offer = (stu  ,company  ,ctc , intern )
+            offer =Placement_Detail.objects.create(
+                student_id = stu ,
+                company_id =company ,
+                ctc_stipend = ctc ,
+                intern = intern 
+            )
+            
+            form.save(offer_id = offer)
+            new_offer = (stu  ,company  ,ctc , intern ,offer)
+            print("------ NEW OFFER CREATED ------")
             print(new_offer)
-            # form.save(offer_id = offer)
-            # form.instance.offer_id = offer
-            return HttpResponse("ok")
+            return redirect(reverse('profile' ,kwargs={"pk" : stu.id}))
 
-     else : 
-
+     else :
         post_form = PostForm()
         context = { 
             'post_form' : post_form
@@ -114,7 +109,7 @@ def user_login(req):
         if form.is_valid() : 
             nm = form.cleaned_data['name']
             pw = form.cleaned_data['password']
-            print(nm ,' ' ,pw)
+            print("Name  = " + nm ,' Password = ' ,pw)
             stu = authenticate(req , username = nm ,password = pw)
             print(stu)
             if stu is not None : 
@@ -133,9 +128,6 @@ def user_logout(req) :
 def my_profile(req , pk) : 
     stu = Student.objects.get(id = pk)
     offer = Placement_Detail.objects.filter(student_id = stu)
-    # print(stu)
-    # print(offer)
-    # print(offer)
     postlist =[]
     for i in offer : 
         post = Post.objects.filter(offer_id = i.id)
@@ -154,7 +146,6 @@ def about(req):
 
 def post_detail(req ,pk):
     author_post = Post.objects.get(id =pk)
-    # print(author_post)
     context  = {
         'post' : author_post
     }
