@@ -10,5 +10,6 @@ urlpatterns = [
     path('logout/' , views.user_logout, name ='logout'),
     path('allposts/' , views.show_all_posts, name ='all_posts'),
     path('profile/<int:pk>' , views.my_profile, name ='profile'),
+    path('post/<int:pk>' , views.post_detail, name ='post-detail'),
     path('about/', views.about, name='about'),
 ]

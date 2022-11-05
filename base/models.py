@@ -40,7 +40,7 @@ class Placement_Detail(models.Model) :
 class Post(models.Model) :
     title = models.CharField(max_length=100)
     content = models.TextField()
-    offer_id = models.ForeignKey(Placement_Detail ,on_delete = models.CASCADE)
+    offer_id = models.ForeignKey(Placement_Detail ,on_delete = models.CASCADE ,related_name = 'offer')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     class Meta : 

@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from .helpers import current_year ,years 
 from django.contrib import messages
+# from django.core.exceptions import ValidationError
 DEPT_CHOICES = [
     ('CS', 'Computer Science'),
     ('IT', 'Information Technology'),
@@ -27,6 +28,19 @@ class PostForm(ModelForm):
         model = Post
         fields = ['title', 'content']
 
+    def __init__(self, *args, **kwargs):
+        super(PostForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+
+    def save(self ,**kwargs) : 
+        self.clean()
+        oid = kwargs['offer_id']
+        print(oid)
+        self.cleaned_data['offer_id'] = oid
+        return super(PostForm ,self).save(**kwargs)
+
+
 
 class RegisterForm(ModelForm) : 
     password = forms.CharField( min_length=4,max_length=100 ,
@@ -38,25 +52,36 @@ class RegisterForm(ModelForm) :
     class Meta:
         model = Student
         fields = ['name', 'year_of_passing', 'dept_id']
-        success_url = reverse_lazy('/')
     
     def clean(self):
         super(RegisterForm ,self).clean()
         password = self.cleaned_data.get("password")
         confirm_password = self.cleaned_data.get("confirm_password")
 
-        if password != confirm_password:
+        if password != confirm_password : 
+            print("Passwords do not match")
             raise forms.ValidationError(
-                "password and confirm_password does not match"
+                "passwords do not match"
             )
         return self.cleaned_data
+
+    def clean_name(self) : 
+        username = self.cleaned_data['name']
+        try : 
+            user = User.objects.get(username = username)
+        except User.DoesNotExist : 
+            return username
+        print("Username already in use")
+        raise forms.ValidationError(
+            'Username already in use' 
+        )
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
-        
 
+   
 class LoginForm(ModelForm) :
     password = forms.CharField(
         widget=forms.PasswordInput()
@@ -64,10 +89,13 @@ class LoginForm(ModelForm) :
     class Meta  : 
         model = Student
         fields =['name']
-    #  def clean_email(self):
-    #         email = self.cleaned_data.get('email')
-    #         username = self.cleaned_data.get('username')
 
-    #         if email and User.objects.filter(email=email).exclude(username=username).count():
-    #             raise forms.ValidationError(_("This email address is already in use. Please supply a different email address."))
-    #         return email
+    def clean_name(self) : 
+        username = self.cleaned_data['name']
+        try : 
+            user = User.objects.get(username = username)
+        except User.DoesNotExist : 
+            raise forms.ValidationError(
+                'User does not exist . Please login' 
+            )
+        return username

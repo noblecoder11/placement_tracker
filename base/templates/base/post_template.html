@@ -1,0 +1,10 @@
+<article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="{% url 'profile' a.id %}">{{a}}</a>
+        <small class="text-muted">{{p.created_at | date:"F d, Y" }}</small>
+      </div>
+      <h2><a class="article-title" href="{% url 'post-detail' p.id%}">{{ p.title }}</a></h2>
+      <p class="article-content">{{ p.content }}</p>
+    </div>
+  </article> 

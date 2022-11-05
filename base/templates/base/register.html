@@ -4,9 +4,40 @@
 
 
 <div class="container main-container" style="width: 25rem" class="align-items-center">
-    <br/>
+    <br />
     <h4>Register</h4>
-    <br/>
+
+    {% if form.errors %}
+    {% for field in form %}
+    {% for error in field.errors %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>
+            {{ error|escape }}
+            <strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+    </div>
+    {% endfor %}
+    {% endfor %}
+    {% endif %}
+
+    {% for err in form.non_field_errors %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>
+            {{err}}
+            <strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+
+                    <span aria-hidden="true">&times;</span>
+                </button>
+    </div>
+    {% endfor %}
+
+
+
+
+    <br />
     <form method="POST" action="">
         <!-- Username input -->
         <div class="form-outline mb-3 ">
@@ -16,24 +47,24 @@
 
         <!-- Password input -->
         <div class="form-outline mb-3">
-                {{form.password}}
+            {{form.password}}
             <label class="form-label" for="form2Example2">Password</label>
         </div>
         <!-- Password input -->
         <div class="form-outline mb-3">
             <!-- <div class="form-control"> -->
-                {{form.confirm_password}}
+            {{form.confirm_password}}
             <label class="form-label" for="form2Example2">Confirm Password</label>
         </div>
         <!-- Password input -->
         <div class="form-outline mb-3">
-                {{form.year_of_passing}}
-                <label class="form-label" for="form2Example2">Year of Passing</label>
+            {{form.year_of_passing}}
+            <label class="form-label" for="form2Example2">Year of Passing</label>
 
         </div>
         <!-- Password input -->
         <div class="form-outline mb-3">
-                {{form.dept_id}}
+            {{form.dept_id}}
             <label class="form-label" for="form2Example2">Department</label>
         </div>
 
