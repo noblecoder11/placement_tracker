@@ -5,6 +5,8 @@ class Department(models.Model) :
     name = models.CharField(max_length=100)
     def __str__(self) :
         return self.name
+    class Meta : 
+        db_table = 'Department'
 
 class Student(models.Model) :
     name = models.CharField(max_length=100)
@@ -14,16 +16,22 @@ class Student(models.Model) :
     def __str__(self) : 
         return self.name
 
+    class Meta : 
+        db_table = 'student'
+
 class Domain(models.Model) : 
     name = models.CharField(max_length=100)
     def __str__(self) : 
         return self.name
+    class Meta : 
+        db_table = 'Domain'
 
 class Company(models.Model) :
     name = models.CharField(max_length=100)
     dream = models.BooleanField(default=False)
     domain_id = models.ForeignKey(Domain, on_delete=models.CASCADE)
     class Meta :
+        db_table = 'Company'
         verbose_name = ("Company")
         verbose_name_plural = ("Companies")
     def __str__(self) : 
@@ -34,6 +42,8 @@ class Placement_Detail(models.Model) :
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     ctc_stipend = models.IntegerField()
     intern = models.BooleanField(default=False )
+    class Meta : 
+        db_table ='Placement_Detail'
 
     
 

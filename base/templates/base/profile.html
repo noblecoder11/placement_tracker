@@ -33,9 +33,14 @@
                   <div class="article-metadata">
                     <a class="mr-2" href="{% url 'profile' student.id %}">{{student.name}}</a>
                     <small class="text-muted">{{p.created_at | date:"F d, Y" }}</small>
+                    {% if request.user.is_authenticated %}
+                      <a href="{% url 'delete-post' p.id %}"> <input type="button" value="Delete post"></a>
+                      <a href="{% url 'update-post' p.id %}"> <input type="button" value="Update post"> </a>
+                    {% endif %}
                   </div>
                   <h2><a class="article-title" href="{% url 'post-detail' p.id%}">{{ p.title }}</a></h2>
                   <p class="article-content">{{ p.content }}</p>
+                  
                 </div>
               </article>
               {% endfor %}

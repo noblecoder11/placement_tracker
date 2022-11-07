@@ -90,12 +90,4 @@ class LoginForm(ModelForm) :
         model = Student
         fields =['name']
 
-    def clean_name(self) : 
-        username = self.cleaned_data['name']
-        try : 
-            user = User.objects.get(username = username)
-        except User.DoesNotExist : 
-            raise forms.ValidationError(
-                'User does not exist . Please login' 
-            )
-        return username
+    
