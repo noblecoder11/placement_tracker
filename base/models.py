@@ -41,7 +41,7 @@ class Placement_Detail(models.Model) :
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     ctc_stipend = models.IntegerField()
-    intern = models.BooleanField(default=False )
+    intern = models.BooleanField()
     class Meta : 
         db_table ='Placement_Detail'
 

@@ -20,8 +20,19 @@ def show_companies() :
     return tuple((nm ,nm) for nm in name_list)
 
 COMPANY_CHOICES = show_companies()
+
+def show_domain() : 
+    domain_list = Domain.objects.values('name')
+    name_list = [] 
+    for nm in domain_list : 
+        name_list.append(nm['name']) 
+    return tuple((nm ,nm) for nm in name_list)
+
+DOMAIN_CHOICES = show_domain()
+
+
 class PostForm(ModelForm):
-    company = forms.ChoiceField(choices = COMPANY_CHOICES )
+    company = forms.ModelChoiceField(queryset= Company.objects.all() )
     intern = forms.BooleanField(initial=False ,required=False)
     ctc = forms.IntegerField()
 
@@ -89,5 +100,17 @@ class LoginForm(ModelForm) :
     class Meta  : 
         model = Student
         fields =['name']
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
 
+class PostFilterForm(forms.Form) : 
+    company = forms.ModelChoiceField(queryset=Company.objects.all())
+    dream = forms.ChoiceField(choices = (('YES' ,'YES') ,('NO' ,'NO')) )
+    domain = forms.ModelChoiceField(queryset= Domain.objects.all() )
+    def __init__(self, *args, **kwargs):
+        super(PostFilterForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
     

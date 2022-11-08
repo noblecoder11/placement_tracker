@@ -1,17 +1,62 @@
 {% extends 'base/main.html' %}}
 {% block content %}
 <h1>All posts</h1>
-    
-    {% for p,a in post %}
-     <article class="media content-section">
-        <div class="media-body">
-          <div class="article-metadata">
-            By<a class="mr-2" href="{% url 'profile' a.id %}"> {{a}}</a>
-            <small class="text-muted">{{p.created_at | date:"F d, Y" }}</small>
-          </div>
-          <h2><a class="article-title" href="{% url 'post-detail' p.id%}">{{ p.title }}</a></h2>
-          <p class="article-content">{{ p.content }}</p>
+<form method="GET" action="">
+  <div class="container d-flex justify-content-center align-items-center">
+    <div class="mt-2">
+      <div class="form-group col-12">
+        <div class="input-group">
+          <h5 class="m-2">Company</h5>
+          <select name="company" class="form-control" id="id_company">
+            <option value="None">All</option>
+            {% for c in companies %}
+            <option value="{{c.name}}">{{c.name}}</option>
+            {% endfor %}
+          </select>
         </div>
-      </article> 
-    {% endfor %}
-{% endblock  %}
+      </div>
+    </div>
+    <!-- <div class="mt-2">
+      <div class="form-group col-7">
+        <div class="input-group">
+          <h5 class="m-2">Dream</h5>
+          <select name="dream" class="form-control" id="id_dream">
+            <option value="None">All</option>
+            <option value="True">YES</option>
+            <option value="False">NO</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="mt-2">
+      <div class="form-group col-7">
+        <div class="input-group">
+          <h5 class="m-2">Domain</h5>
+          <select name="Domain" class="form-control" id="id_dream">
+            <option value="All">All</option>
+            <option value="Fintech">Fintech</option>
+            <option value="IT">IT</option>
+          </select>
+        </div>
+      </div>
+    </div> -->
+    <div class="form-row mt-8">        
+          <button type="submit" class="btn btn-primary mb-2 mx-4">Search</button>
+    </div>
+  </div>
+</form>
+{% for p in post %}
+<div class="container m-auto">
+  <article class="media content-section ">
+    <div class="media-body">
+      <div class="article-metadata">
+        By<a class="mr-2" href="{% url 'profile' p.offer_id.student_id_id %}"> {{p.offer_id.student_id}}</a>
+        <small class="text-muted">{{p.created_at | date:"F d, Y" }}</small>
+      </div>
+      <h2><a class="article-title" href="{% url 'post-detail' p.id%}">{{ p.title }}</a></h2>
+      <p class="article-content">{{ p.content }}</p>
+    </div>
+  </article>
+</div>
+{% endfor %}
+{% endblock %}
