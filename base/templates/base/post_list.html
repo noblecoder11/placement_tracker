@@ -8,7 +8,7 @@
         <div class="input-group">
           <h5 class="m-2">Company</h5>
           <select name="company" class="form-control" id="id_company">
-            <option value="None">All</option>
+            <option>All</option>
             {% for c in companies %}
             <option value="{{c.name}}">{{c.name}}</option>
             {% endfor %}
@@ -16,12 +16,12 @@
         </div>
       </div>
     </div>
-    <!-- <div class="mt-2">
+    <div class="mt-2">
       <div class="form-group col-7">
         <div class="input-group">
           <h5 class="m-2">Dream</h5>
           <select name="dream" class="form-control" id="id_dream">
-            <option value="None">All</option>
+            <option >All</option>
             <option value="True">YES</option>
             <option value="False">NO</option>
           </select>
@@ -32,14 +32,14 @@
       <div class="form-group col-7">
         <div class="input-group">
           <h5 class="m-2">Domain</h5>
-          <select name="Domain" class="form-control" id="id_dream">
-            <option value="All">All</option>
+          <select name="Domain" class="form-control" id="id_domain">
+            <option>All</option>
             <option value="Fintech">Fintech</option>
             <option value="IT">IT</option>
           </select>
         </div>
       </div>
-    </div> -->
+    </div>
     <div class="form-row mt-8">        
           <button type="submit" class="btn btn-primary mb-2 mx-4">Search</button>
     </div>

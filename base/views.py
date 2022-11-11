@@ -36,24 +36,32 @@ def show_all_posts(request ) :
                 comapnies.append(c)
          
             #FILTER FORM LOGIC
-            form = PostFilterForm()
+            
             company = request.GET.get('company') 
             dream = request.GET.get('dream') or ''
             domain = request.GET.get('domain') or '' 
             print("company = " ,company)
             post = []        
-            if company is not None  : 
-                print("inside here")
+            if company != 'All'  : 
+                print("inside company ")
                 for p in Post.objects.raw("SELECT * FROM posts WHERE offer_id_id in (SELECT id from Placement_Detail  WHERE company_id_id in (SELECT id from Company WHERE name =%s))" ,[company]) :    
                     post.append(p)
-            elif company == None:
-                print("here")
-                for p in  Post.objects.raw("SELECT * FROM posts"):
+            elif dream != 'All' and domain != 'All':
+                print("inside dream and domain")
+                for p in Post.objects.raw("SELECT * FROM posts WHERE offer_id_id in (SELECT id from Placement_Detail  WHERE company_id_id in (SELECT id from Company WHERE dream =%s and domain_id_id=%s))" ,[company ,domain]) :    
+                    post.append(p)
+                
+                    # cursor.execute("SELECT * FROM Company WHERE dream=%s" ,)
+            elif dream != 'All' : 
+                for p in Post.objects.raw("SELECT * FROM posts WHERE offer_id_id in (SELECT id from Placement_Detail  WHERE company_id_id in (SELECT id from Company WHERE dream =%s ))" ,[dream]) :   
                     post.append(p)
                 #  print(p.offer_id_id)
+            else : 
+                for p in Post.objects.raw("SELECT * FROM posts") : 
+                    post.append(p)
             context ={
                 'post' : post,
-                'form' : form , 
+            
                 'companies' : comapnies
             }
         else  : 

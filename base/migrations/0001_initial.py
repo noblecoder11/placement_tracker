@@ -71,9 +71,4 @@ class Migration(migrations.Migration):
                 ('student_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='base.student')),
             ],
         ),
-        migrations.AddField(
-            model_name='company',
-            name='domain_id',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='base.domain'),
-        ),
     ]
